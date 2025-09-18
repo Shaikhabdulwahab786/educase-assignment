@@ -1,6 +1,5 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import type { UserData } from "../data/fakeUsrs";
-import { useEffect, } from "react";
 import { logout } from "../utils/auth";
 
 
@@ -8,24 +7,16 @@ export default function User() {
   const navigate = useNavigate();
   const user = useLoaderData() as UserData;
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-
-    if (token) {
-      if (sessionStorage.getItem("hasRefreshed")) {
-        logout()
-        sessionStorage.removeItem("hasRefreshed"); // reset for next login
-        navigate("/login", { replace: true });
-      } else {
-        sessionStorage.setItem("hasRefreshed", "true");
-      }
-    }
-  }, [navigate]);
+   function handleLogout() {
+    logout()
+    navigate("/login");
+  }
 
   return (
     <div className=" max-w-[375px] lg:mt-10 w-[375px] max-h-[812px] lg:h-[90vh] h-screen bg-[#F7F8F9] m-auto">
-      <div className=" w-full p-5 text-left py-6 mb-2 bg-[#FFFFFF]">
+      <div className=" w-full p-5 flex  justify-between items-center text-left py-6 mb-2 bg-[#FFFFFF]">
         <h1 className="font-rubik text-lg ">Account Settings</h1>
+        <button onClick={handleLogout} className=" px-4 py-1 bg-indigo-600 text-white font-rubik uppercase rounded-lg text-xs">Logout</button>
       </div>
       <div className="flex flex-col px-5 gap-5">
         <div className="flex gap-5">
