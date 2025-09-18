@@ -1,8 +1,26 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import type { UserData } from "../data/fakeUsrs";
+import { useEffect, } from "react";
+import { logout } from "../utils/auth";
+
 
 export default function User() {
+  const navigate = useNavigate();
   const user = useLoaderData() as UserData;
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+
+    if (token) {
+      if (sessionStorage.getItem("hasRefreshed")) {
+        logout()
+        sessionStorage.removeItem("hasRefreshed"); // reset for next login
+        navigate("/login", { replace: true });
+      } else {
+        sessionStorage.setItem("hasRefreshed", "true");
+      }
+    }
+  }, [navigate]);
 
   return (
     <div className=" max-w-[375px] lg:mt-10 w-[375px] max-h-[812px] lg:h-[90vh] h-screen bg-[#F7F8F9] m-auto">
@@ -12,15 +30,27 @@ export default function User() {
       <div className="flex flex-col px-5 gap-5">
         <div className="flex gap-5">
           <div className=" relative">
-          <img className="w-19 h-19 rounded-full" src="/img1.png" alt="Image" />
-          <img className="w-5 h-5 absolute top-2/3 -right-1 rounded-full" src="/icon.png" alt="Image" />
+            <img
+              className="w-19 h-19 rounded-full"
+              src="/img1.png"
+              alt="Image"
+            />
+            <img
+              className="w-5 h-5 absolute top-2/3 -right-1 rounded-full"
+              src="/icon.png"
+              alt="Image"
+            />
           </div>
           <div className="flex flex-col text-left">
-          <strong>{user.name}</strong>
-          <p>{user.email}</p>
+            <strong>{user?.name}</strong>
+            <p>{user?.email}</p>
+          </div>
         </div>
-        </div>
-        <p className=" text-left text-sm tracking-normal">Lorem Ipsum Dolor Sit Amet, Consetetur Sadipscing Elitr, Sed Diam Nonumy Eirmod Tempor Invidunt Ut Labore Et Dolore Magna Aliquyam Erat, Sed Diam</p>
+        <p className=" text-left text-sm tracking-normal">
+          Lorem Ipsum Dolor Sit Amet, Consetetur Sadipscing Elitr, Sed Diam
+          Nonumy Eirmod Tempor Invidunt Ut Labore Et Dolore Magna Aliquyam Erat,
+          Sed Diam
+        </p>
       </div>
       <hr className="  top-1 left-1 border-dashed border-[#CBCBCB] my-4" />
     </div>
