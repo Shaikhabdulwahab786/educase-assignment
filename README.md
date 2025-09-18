@@ -1,69 +1,178 @@
-# React + TypeScript + Vite
+# Mobile App Assignment — Pixel-Perfect Implementation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Live design / assignment reference:** [https://xd.adobe.com/view/b68eea25-003d-4a5d-8fdd-d463eeb20b32-e3dd/](https://xd.adobe.com/view/b68eea25-003d-4a5d-8fdd-d463eeb20b32-e3dd/)
 
-Currently, two official plugins are available:
+## Demo (Hosted)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Deployed on:** Vercel (or similar)
+* **Live URL:** *replace-with-your-deployment-url*
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Summary
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This repository contains a pixel-perfect web implementation of the provided mobile app design. The app UI is centered on the webpage and responsive across breakpoints. Navigation between pages is handled with client-side routing for a fast, seamless experience. The project was built with modern best practices: Tailwind CSS, code splitting (dynamic imports), and production-level optimizations.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech stack
+
+* **Framework:** React.js
+* **Styling:** Tailwind CSS
+* **Routing:** React Router (client-side routing)
+* **Build & Deploy:** Vercel
+* **Bundling / Optimization:** Webpack / Vite with dynamic imports for code-splitting
+
+---
+
+## Key features & implementation notes
+
+* **Pixel-perfect:** All screens follow the Adobe XD reference closely. Spacing, typography, and color palette were matched to the design tokens.
+* **Centered mobile interface:** The mobile app mockup is placed inside a centered viewport container on wide screens to mimic a phone frame and keep the presentation consistent.
+* **Responsive & accessible:** Breakpoints and a11y considerations (semantic HTML, `alt` text, focus states) were included.
+* **Seamless navigation:** Client-side routing enables instant page transitions with preserved state where appropriate.
+* **Performance & optimizations:**
+
+  * Code-splitting using dynamic imports for large components/pages.
+  * Lazy-loaded images.
+  * Minified CSS and JS via build pipeline.
+  * Tree-shaking enabled by default (React + ES Modules).
+* **Tailwind:** Utility-driven styles with configuration in `tailwind.config.js`. Custom theme tokens (colors, fonts, spacing) are placed there for consistency.
+
+---
+
+## Test User Credentials
+
+For testing the login functionality, you can use the following credentials:
+
+* **Email:** `jane@example.com`
+* **Password:** `1234`
+
+---
+
+## Folder structure (example)
+
+```
+/ (root)
+├─ public/                # static assets (images, favicon)
+├─ src/
+│  ├─ components/         # reusable UI components
+│  ├─ layouts/            # app layout and centered phone container
+│  ├─ pages/              # React Router views
+│  ├─ styles/             # Tailwind globals and utilities
+│  └─ utils/              # helper functions
+├─ .env                   # environment variables (not committed)
+├─ package.json
+└─ README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
+
+## How to run locally
+
+1. Clone the repo
+
+```bash
+git clone <repo-url>
+cd <repo-folder>
+```
+
+2. Install dependencies
+
+```bash
+npm install
+# or
+yarn
+```
+
+3. Run the dev server
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+4. Open [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Build & Deploy (Vercel)
+
+1. Push your code to GitHub.
+2. Sign in to Vercel and create a new project.
+3. Import the GitHub repository and accept the default React settings.
+4. Set any environment variables (if used) in the Vercel dashboard.
+5. Click **Deploy**. Vercel will run `npm run build` and publish the site.
+
+**Vercel tips:**
+
+* Use the `REACT_APP_` prefix for any public env vars.
+* Configure automatic deployments on the main branch.
+
+---
+
+## Optimization & Code-splitting examples
+
+* **Dynamic import (React):**
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import React, { lazy, Suspense } from 'react';
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+const HeavyComponent = lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  );
+}
 ```
+
+---
+
+## Tailwind configuration highlights
+
+* Custom fonts and sizes mapped to the design (e.g., `Rubik` with 16/18/28px tokens).
+* Color palette matches design tokens: `#F7F8F9`, `#6C25FF`, `#E70B897B`, `#FFFFFF`, `#1D2226`, etc.
+* Responsive utilities used to fine-tune mobile/tablet/desktop layouts.
+
+---
+
+## Accessibility & testing
+
+* Semantic HTML and ARIA where needed.
+* Keyboard navigability ensured for interactive components.
+* Basic Lighthouse audit checks were performed and key issues fixed (images, contrast, unused CSS).
+
+---
+
+## Known limitations
+
+* Replace the demo URL in this README after deploying to Vercel.
+* If you use a different router/bundler, update the scripts accordingly.
+
+---
+
+## Scripts
+
+```json
+{
+  "dev": "vite",
+  "build": "vite build",
+  "serve": "vite preview"
+}
+```
+
+---
+
+## Contribution
+
+If you'd like to improve or modify the project:
+
+1. Fork the repo
+2. Create a feature branch
+3. Open a PR with a clear description of changes
+
+---
