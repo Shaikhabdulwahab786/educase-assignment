@@ -1,11 +1,9 @@
 # Mobile App Assignment — Pixel-Perfect Implementation
 
-> **Live design / assignment reference:** [https://xd.adobe.com/view/b68eea25-003d-4a5d-8fdd-d463eeb20b32-e3dd/](https://xd.adobe.com/view/b68eea25-003d-4a5d-8fdd-d463eeb20b32-e3dd/)
-
 ## Demo (Hosted)
 
 * **Deployed on:** Vercel (or similar)
-* **Live URL:** *replace-with-your-deployment-url*
+* **Live URL:** [*replace-with-your-deployment-url*](https://educase-assignment-cyan-nine.vercel.app/)
 
 ---
 
